@@ -32,7 +32,9 @@ gem 'jbuilder', '~> 2.5'
 # gem 'bcrypt', '~> 3.1.7'
 gem 'haml'
 gem 'jquery-rails'
-gem 'react-rails'
+
+gem 'webpacker'
+gem 'react_on_rails'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
