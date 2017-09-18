@@ -11,12 +11,5 @@
 // about supported directives.
 //
 //= require rails-ujs
-//= require jquery
-//= require jquery_ujs
 //= require turbolinks
-//= require react
-//= require react_ujs
-//= require moment
-//= require react-datetime.min
-//= require components
 //= require_tree .

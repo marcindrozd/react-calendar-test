@@ -1,3 +1,7 @@
+import React from 'react';
+import Datetime from 'react-datetime';
+import Label from './Label';
+
 class AppointmentForm extends React.Component{
   handleChange(e) {
     const name = e.target.name;
@@ -44,3 +48,5 @@ class AppointmentForm extends React.Component{
     )
   }
 }
+
+export default AppointmentForm;

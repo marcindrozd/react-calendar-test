@@ -1,3 +1,9 @@
+import React from 'react';
+import update from 'immutability-helper';
+import axios from 'axios';
+import AppointmentForm from './AppointmentForm';
+import AppointmentsList from './AppointmentsList';
+
 class Appointments extends React.Component{
   constructor(props) {
     super(props);
@@ -15,12 +21,12 @@ class Appointments extends React.Component{
 
   handleFormSubmit() {
     const appointment = { title: this.state.title, appt_time: this.state.appt_time };
-    $.post('/appointments', { appointment: appointment })
-      .done((data) => { this.addNewAppointment(data) });
+    axios.post('/appointments', { appointment: appointment })
+      .then((response) => { this.addNewAppointment(response.data) });
   }
 
   addNewAppointment(appointment) {
-    const appointments = React.addons.update(this.state.appointments, { $push: [appointment] });
+    const appointments = update(this.state.appointments, { $push: [appointment] });
     this.setState({
       appointments: appointments.sort((a, b) => new Date(b.appt_time) - new Date(a.appt_time)),
     });
@@ -40,3 +46,5 @@ class Appointments extends React.Component{
     )
   }
 }
+
+export default Appointments;

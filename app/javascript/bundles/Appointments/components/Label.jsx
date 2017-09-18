@@ -1,3 +1,5 @@
+import React from 'react';
+
 class Label extends React.Component {
   render () {
     return (
@@ -11,3 +13,5 @@ class Label extends React.Component {
 Label.propTypes = {
   label: React.PropTypes.string
 };
+
+export default Label;
