@@ -3,6 +3,10 @@ import update from 'immutability-helper';
 import axios from 'axios';
 import AppointmentForm from './AppointmentForm';
 import AppointmentsList from './AppointmentsList';
+import FormErrors from './FormErrors';
+
+axios.defaults.headers.common['X-CSRF-Token'] = ReactOnRails.authenticityHeaders();
+axios.defaults.headers.common['Accept'] = 'application/json';
 
 class Appointments extends React.Component{
   constructor(props) {
@@ -12,6 +16,7 @@ class Appointments extends React.Component{
       appointments: props.appointments,
       title: 'Standup meeting',
       appt_time: 'Tomorrow at 9am',
+      formErrors: {},
     }
   }
 
@@ -22,7 +27,18 @@ class Appointments extends React.Component{
   handleFormSubmit() {
     const appointment = { title: this.state.title, appt_time: this.state.appt_time };
     axios.post('/appointments', { appointment: appointment })
-      .then((response) => { this.addNewAppointment(response.data) });
+      .then((response) => {
+        this.addNewAppointment(response.data);
+        this.resetFormErrors();
+      })
+      .catch((error) => {
+        console.log(error.response);
+        this.setState({ formErrors: error.response.data })
+      });
+  }
+
+  resetFormErrors() {
+    this.setState({ formErrors: {} })
   }
 
   addNewAppointment(appointment) {
@@ -35,6 +51,7 @@ class Appointments extends React.Component{
   render() {
     return (
       <div>
+        <FormErrors formErrors = {this.state.formErrors} />
         <AppointmentForm
           title={this.state.title}
           appt_time={this.state.appt_time}
