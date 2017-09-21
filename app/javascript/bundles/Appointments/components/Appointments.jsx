@@ -21,7 +21,7 @@ class Appointments extends React.Component{
     }
   }
 
-  handleUserInput(obj) {
+  handleUserInput = (obj) => {
     this.setState(obj, this.validateForm);
   }
 
@@ -29,7 +29,7 @@ class Appointments extends React.Component{
     this.setState({ formValid: this.state.title.trim().length > 2 })
   }
 
-  handleFormSubmit() {
+  handleFormSubmit = () => {
     const appointment = { title: this.state.title, appt_time: this.state.appt_time };
     axios.post('/appointments', { appointment: appointment })
       .then((response) => {
@@ -60,8 +60,8 @@ class Appointments extends React.Component{
         <AppointmentForm
           title={this.state.title}
           appt_time={this.state.appt_time}
-          onUserInput={(obj) => this.handleUserInput(obj)}
-          onFormSubmit={() => this.handleFormSubmit()}
+          onUserInput={this.handleUserInput}
+          onFormSubmit={this.handleFormSubmit}
           formValid={this.state.formValid}
         />
         <AppointmentsList appointments={this.state.appointments} />
