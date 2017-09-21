@@ -22,28 +22,28 @@ class Appointments extends React.Component{
     }
   }
 
-  handleUserInput = (fieldName, fieldValue) => {
+  handleUserInput = (fieldName, fieldValue, validations) => {
     const newFieldState = update(this.state[fieldName], { value: { $set: fieldValue }});
     this.setState({ [fieldName]: newFieldState },
-                  () => this.validateField(fieldName, fieldValue));
+                  () => this.validateField(fieldName, fieldValue, validations));
   }
 
-  validateField(fieldName, fieldValue) {
+  validateField(fieldName, fieldValue, validations) {
     let fieldValid;
-    switch(fieldName) {
-      case 'title':
-        fieldValid = this.state.title.value.trim().length > 2;
-        break;
-      case 'appt_time':
-        fieldValid = moment(this.state.appt_time.value).isValid() &&
-                     moment(this.state.appt_time.value).isAfter()
-        break;
-      default:
-        break;
-    }
+    let fieldErrors = validations.reduce((errors, v) => {
+      let e = v(fieldValue);
+      if (e !== '') {
+        errors.push(e);
+      }
 
+      return errors;
+    }, []);
+
+    fieldValid = fieldErrors.length === 0;
+    
+    const newFormErrors = update(this.state.formErrors, { $merge: { [fieldName]: fieldErrors } });
     const newFieldState = update(this.state[fieldName], { valid: { $set: fieldValid }});
-    this.setState({ [fieldName]: newFieldState }, this.validateForm);
+    this.setState({ [fieldName]: newFieldState, formErrors: newFormErrors }, this.validateForm);
   }
 
   validateForm() {
