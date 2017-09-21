@@ -1,6 +1,7 @@
 import React from 'react';
 import update from 'immutability-helper';
 import axios from 'axios';
+import moment from 'moment';
 import AppointmentForm from './AppointmentForm';
 import AppointmentsList from './AppointmentsList';
 import FormErrors from './FormErrors';
@@ -14,10 +15,10 @@ class Appointments extends React.Component{
 
     this.state = {
       appointments: props.appointments,
-      title: 'Standup meeting',
-      appt_time: 'Tomorrow at 9am',
+      title: '',
+      appt_time: '',
       formErrors: {},
-      formValid: true,
+      formValid: false,
     }
   }
 
@@ -26,7 +27,9 @@ class Appointments extends React.Component{
   }
 
   validateForm() {
-    this.setState({ formValid: this.state.title.trim().length > 2 })
+    this.setState({ formValid: this.state.title.trim().length > 2 &&
+                               moment(this.state.appt_time).isValid() &&
+                               moment(this.state.appt_time).isAfter() })
   }
 
   handleFormSubmit = () => {
