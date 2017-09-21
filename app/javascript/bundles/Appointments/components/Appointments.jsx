@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import update from 'immutability-helper';
 import axios from 'axios';
 import moment from 'moment';
@@ -10,13 +11,17 @@ axios.defaults.headers.common['X-CSRF-Token'] = ReactOnRails.authenticityHeaders
 axios.defaults.headers.common['Accept'] = 'application/json';
 
 class Appointments extends React.Component{
+  static propTypes = {
+    appointments: PropTypes.array.isRequired,
+  }
+
   constructor(props) {
     super(props);
 
     this.state = {
       appointments: props.appointments,
       title: { value: '', valid: false },
-      appt_time: { value: '', valid: false },
+      appt_time: { value: new Date(), valid: false },
       formErrors: {},
       formValid: false,
     }
@@ -40,7 +45,7 @@ class Appointments extends React.Component{
     }, []);
 
     fieldValid = fieldErrors.length === 0;
-    
+
     const newFormErrors = update(this.state.formErrors, { $merge: { [fieldName]: fieldErrors } });
     const newFieldState = update(this.state[fieldName], { valid: { $set: fieldValid }});
     this.setState({ [fieldName]: newFieldState, formErrors: newFormErrors }, this.validateForm);

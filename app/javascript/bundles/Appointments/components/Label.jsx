@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class Label extends React.Component {
   render () {
@@ -11,7 +12,7 @@ class Label extends React.Component {
 }
 
 Label.propTypes = {
-  label: React.PropTypes.string
+  label: PropTypes.string
 };
 
 export default Label;
