@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resource :appointments
+  resources :appointments
 
   root 'appointments#index'
 end
