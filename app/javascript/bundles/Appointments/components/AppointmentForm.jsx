@@ -107,6 +107,19 @@ class AppointmentForm extends React.Component{
       });
   }
 
+  deleteAppointment = () => {
+    if(confirm('Are you sure you want to delete this appointment?')) {
+      axios.delete(`/appointments/${this.props.match.params.id}`)
+        .then((response) => {
+          this.props.history.push('/');
+          this.resetFormErrors();
+        })
+        .catch((error) => {
+          console.log('could not delete the appointment')
+        });
+    }
+  }
+
   resetFormErrors() {
     this.setState({ formErrors: {} })
   }
@@ -151,6 +164,14 @@ class AppointmentForm extends React.Component{
             value={ this.state.editing ? 'Update Appointment' : 'Make Appointment' }
             disabled={!this.state.formValid}
           />
+          { this.state.editing && (
+              <p>
+                <button onClick={this.deleteAppointment} type='button'>
+                  Delete appointment
+                </button>
+              </p>
+            )
+          }
         </form>
       </div>
     )

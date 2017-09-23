@@ -33,7 +33,6 @@ class Appointment extends React.Component {
   render() {
     return (
       <div className='appointment'>
-        <h2>Appointment</h2>
         <Link to={`/appointments/${this.state.appointment.id}`}>
           <h3>{this.state.appointment.title}</h3>
         </Link>
