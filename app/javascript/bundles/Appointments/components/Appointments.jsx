@@ -15,6 +15,10 @@ class Appointments extends React.Component{
     appointments: PropTypes.array.isRequired,
   }
 
+  static defaultProps = {
+    appointments: []
+  }
+
   constructor(props) {
     super(props);
 
@@ -25,6 +29,13 @@ class Appointments extends React.Component{
       formErrors: {},
       formValid: false,
     }
+  }
+
+  componentDidMount() {
+    axios.get('/appointments')
+      .then((response) => {
+        this.setState({ appointments: response.data })
+      })
   }
 
   handleUserInput = (fieldName, fieldValue, validations) => {
