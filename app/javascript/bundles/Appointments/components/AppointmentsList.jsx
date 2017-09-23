@@ -15,4 +15,8 @@ AppointmentsList.propTypes = {
   appointments: PropTypes.array.isRequired
 }
 
+AppointmentsList.defaultProps = {
+  appointments: []
+}
+
 export default AppointmentsList;

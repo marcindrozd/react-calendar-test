@@ -13,7 +13,7 @@ class Appointment extends React.Component {
     }
   }
 
-  static propType = {
+  static propTypes = {
     appointment: PropTypes.object.isRequired
   }
 
@@ -38,6 +38,9 @@ class Appointment extends React.Component {
           <h3>{this.state.appointment.title}</h3>
         </Link>
         <p>{formatDate(this.state.appointment.appt_time)}</p>
+        <Link to={`/appointments/${this.state.appointment.id}/edit`}>
+          Edit
+        </Link>
       </div>
     )
   }
